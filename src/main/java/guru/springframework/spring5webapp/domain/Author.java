@@ -1,6 +1,8 @@
 package guru.springframework.spring5webapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,17 +16,16 @@ public class Author {
     private String lastName;
 
     @ManyToMany
-    private Set<Book> book;
+    private Set<Book> book = new HashSet<>();
 
     // note: JPA requires a default constructor
     public Author() {
     }
 
     // a parameterized constructor
-    public Author(String firstName, String lastName, Set<Book> book) {
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.book = book;
     }
 
     public Long getId() {
@@ -57,5 +58,28 @@ public class Author {
 
     public void setBook(Set<Book> book) {
         this.book = book;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", book=" + book +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

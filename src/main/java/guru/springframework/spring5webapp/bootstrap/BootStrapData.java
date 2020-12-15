@@ -25,5 +25,12 @@ public class BootStrapData implements CommandLineRunner {
 
         eric.getBook().add(ddd);
         ddd.getAuthors().add(eric);
+
+        // saving the objects into the H2 Database
+        authorRepository.save(eric);
+        bookRepository.save(ddd);
+
+        System.out.println("Started In Bootstrap");
+        System.out.println("Number Of Book Saved: " + bookRepository.count());
     }
 }
